@@ -1,0 +1,9 @@
+.hidden {
+  display: none;
+}
+h1 {
+  font-size: 24px;
+}
+header p {
+  font-style: italic;
+}
