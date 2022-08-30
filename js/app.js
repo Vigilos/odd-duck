@@ -2,6 +2,7 @@
 
 document.querySelector('aside').classList.add('hidden');
 document.getElementById('view-results').classList.add('hidden');
+document.getElementById('chart-div').classList.add('hidden');
 
 let pickImagesEl = document.getElementById('pick-images');
 let products = [];
@@ -10,6 +11,7 @@ let votingRounds = 25;
 let votesLeft = votingRounds + 1;
 let numProductsDisplayed = 3;
 let clickedElement;
+let lastProducts = [];
 let productImages = [
   'bag.jpg',
   'boots.jpg',
@@ -54,6 +56,7 @@ for (let product of productImages) {
   });
 }
 
+// Select unique products to be displayed (and not displayed in last round either)
 function selectProducts() {
   let uniqueProducts = [];
 
@@ -62,12 +65,13 @@ function selectProducts() {
     let product = getRandomProducts(products);
 
     // Add product to uniqueProducts array if not already chosen
-    if (!uniqueProducts.includes(product)) {
+    if (!uniqueProducts.includes(product) && !lastProducts.includes(product)) {
       uniqueProducts.push(product);
       product.timesShown++;
     }
   }
   displayVotesLeft(); // Decrement votes left and display
+  lastProducts = uniqueProducts;
   //Display current chosen products to the DOM
   displayProducts(uniqueProducts);
 }
@@ -94,7 +98,7 @@ function displayProducts(arrayToDisplay) {
     imgEl.src = product.prodImgPath;
     sectionEl.appendChild(imgEl);
     let pEl = document.createElement('p');
-    pEl.textContent = product.prodName;
+    pEl.textContent = capitalizeFirstLetter(product.prodName);
     sectionEl.appendChild(pEl);
     imageNumber++; // Increment variable to create successive class names
   }
@@ -135,6 +139,7 @@ function updateSelectedProducts(selectedProduct) {
   }
 }
 
+// Display table of voting results in <aside>
 function displayResults() {
   for (let result of products) {
     let tableEl = document.getElementById('results-list');
@@ -155,6 +160,7 @@ function displayResults() {
   displayChart();
 }
 
+// Display number of voting round left
 function displayVotesLeft() {
   votesLeft--;
   document.getElementById(
@@ -162,6 +168,7 @@ function displayVotesLeft() {
   ).textContent = `Votes left: ${votesLeft}`;
 }
 
+// Display char tof results after voting rounds complete
 function displayChart() {
   let prodNames = [];
   let timesDisplayed = [];
@@ -208,6 +215,13 @@ function displayChart() {
 
   let canvasChart = document.getElementById('results-chart');
   const resultsChart = new Chart(canvasChart, config);
+
+  document.getElementById('chart-div').classList.remove('hidden');
+}
+
+// Capitalize the first letter of a given string
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 selectProducts();
@@ -216,7 +230,3 @@ selectProducts();
 document
   .querySelector('#pick-images')
   .addEventListener('click', handleProductSelected);
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}

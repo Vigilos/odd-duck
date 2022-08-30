@@ -114,7 +114,9 @@ footer p {
   color: white;
 }
 #chart-div {
-  padding: 0px 0px 20px 70px;
+  background-color: #faba89;
+  box-shadow: 1px 1px 5px #555 inset;
+  padding: 8px;
+  margin: 0px 0px 20px 60px;
   width: 500px;
-  height: 300px;
 }
