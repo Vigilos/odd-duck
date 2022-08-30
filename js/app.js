@@ -152,6 +152,7 @@ function displayResults() {
     document.querySelector('aside').classList.remove('hidden');
     document.getElementById('view-results').classList.add('hidden');
   }
+  displayChart();
 }
 
 function displayVotesLeft() {
@@ -173,6 +174,41 @@ function displayChart() {
     timesVoted[i] = products[i].timesSelected;
   }
 
+  let data = {
+    labels: prodNames,
+    datasets: [
+      {
+        label: 'Times Voted',
+        data: timesVoted,
+        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgb(255, 99, 132)'],
+        borderWidth: 1,
+      },
+      {
+        label: 'Times Shown',
+        data: timesDisplayed,
+        backgroundColor: ['rgba(255, 159, 64, 0.2)'],
+        borderColor: ['rgb(255, 159, 64)'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  let config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+
+  let canvasChart = document.getElementById('results-chart');
+  const resultsChart = new Chart(canvasChart, config);
+
   // ****** Continue working
 }
 
@@ -182,3 +218,9 @@ selectProducts();
 document
   .querySelector('#pick-images')
   .addEventListener('click', handleProductSelected);
+
+/*
+function capitalizeFirstLetter(sampleString) {
+  return sampleString.charAt(0).toUpperCase() + sampleString.slice(1);
+}
+*/
