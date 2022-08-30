@@ -161,6 +161,21 @@ function displayVotesLeft() {
   ).textContent = `Votes left: ${votesLeft}`;
 }
 
+function displayChart() {
+  let prodNames = [];
+  let timesDisplayed = [];
+  let timesVoted = [];
+
+  // Populate array for chart data
+  for (let i = 0; i < products.length; i++) {
+    prodNames[i] = products[i].prodName;
+    timesDisplayed[i] = products[i].timesShown;
+    timesVoted[i] = products[i].timesSelected;
+  }
+
+  // ****** Continue working
+}
+
 selectProducts();
 
 // Get selections from user and denote in product object
