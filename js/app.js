@@ -103,7 +103,6 @@ function displayProducts(arrayToDisplay) {
 // Process clicked item
 function handleProductSelected(event) {
   clickedElement = event.target.alt;
-  console.log(clickedElement);
   if (typeof clickedElement == 'string') {
     updateSelectedProducts(clickedElement);
   }

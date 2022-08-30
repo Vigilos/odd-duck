@@ -33,13 +33,11 @@ main h2 {
   margin: 20px;
 }
 main section {
-  padding-bottom: 80px;
 }
 aside {
   border: thin solid #757474;
   padding-bottom: 40px;
   background-color: #97b6dc;
-  margin-bottom: 30px;
 }
 aside h2 {
   text-align: center;
@@ -68,6 +66,7 @@ aside h2 {
   color: black;
   letter-spacing: 2px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 #results-list {
   margin-left: 20px;
@@ -95,10 +94,10 @@ aside h2 {
   font-size: 18px;
   font-weight: bold;
   margin-left: 20px;
-  padding: 8px;
+  padding: 8px 8px 20px 8px;
 }
 footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   width: 100%;
 }
