@@ -33,7 +33,7 @@ main h2 {
   margin: 20px;
 }
 main section {
-  margin-bottom: 80px;
+  padding-bottom: 80px;
 }
 aside {
   border: thin solid #757474;
