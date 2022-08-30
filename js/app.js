@@ -140,7 +140,7 @@ function displayResults() {
     let tableEl = document.getElementById('results-list');
     let rowEl = tableEl.appendChild(document.createElement('tr'));
     let cellEl = document.createElement('th');
-    cellEl.textContent = `${result.prodName}`;
+    cellEl.textContent = `${capitalizeFirstLetter(result.prodName)}`;
     rowEl.appendChild(cellEl);
     cellEl = document.createElement('td');
     cellEl.textContent = `${result.timesShown}`;
@@ -169,7 +169,7 @@ function displayChart() {
 
   // Populate array for chart data
   for (let i = 0; i < products.length; i++) {
-    prodNames[i] = products[i].prodName;
+    prodNames[i] = capitalizeFirstLetter(products[i].prodName);
     timesDisplayed[i] = products[i].timesShown;
     timesVoted[i] = products[i].timesSelected;
   }
@@ -180,15 +180,15 @@ function displayChart() {
       {
         label: 'Times Voted',
         data: timesVoted,
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgb(255, 99, 132)'],
+        backgroundColor: ['rgba(51, 204, 0, 0.5)'],
+        borderColor: ['rgb(51, 204, 0)'],
         borderWidth: 1,
       },
       {
         label: 'Times Shown',
         data: timesDisplayed,
-        backgroundColor: ['rgba(255, 159, 64, 0.2)'],
-        borderColor: ['rgb(255, 159, 64)'],
+        backgroundColor: ['rgba(51, 102, 255, 0.5)'],
+        borderColor: ['rgb(51, 102, 255)'],
         borderWidth: 1,
       },
     ],
@@ -208,8 +208,6 @@ function displayChart() {
 
   let canvasChart = document.getElementById('results-chart');
   const resultsChart = new Chart(canvasChart, config);
-
-  // ****** Continue working
 }
 
 selectProducts();
@@ -219,8 +217,6 @@ document
   .querySelector('#pick-images')
   .addEventListener('click', handleProductSelected);
 
-/*
-function capitalizeFirstLetter(sampleString) {
-  return sampleString.charAt(0).toUpperCase() + sampleString.slice(1);
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
-*/
