@@ -6,7 +6,7 @@ document.getElementById('view-results').classList.add('hidden');
 let pickImagesEl = document.getElementById('pick-images');
 let products = [];
 let numVotes = 0;
-let votingRounds = 2;
+let votingRounds = 25;
 let numProductsDisplayed = 3;
 let clickedElement;
 let productImages = [
@@ -135,10 +135,18 @@ function updateSelectedProducts(selectedProduct) {
 
 function displayResults() {
   for (let result of products) {
-    let ulEl = document.getElementById('results-list');
-    let liEl = document.createElement('li');
-    liEl.textContent = `${result.prodName} Seen: ${result.timesShown}, Voted For: ${result.timesSelected}`;
-    ulEl.appendChild(liEl);
+    let tableEl = document.getElementById('results-list');
+    let rowEl = tableEl.appendChild(document.createElement('tr'));
+    let cellEl = document.createElement('th');
+    cellEl.textContent = `${result.prodName}`;
+    rowEl.appendChild(cellEl);
+    cellEl = document.createElement('td');
+    cellEl.textContent = `${result.timesShown}`;
+    rowEl.appendChild(cellEl);
+    cellEl = document.createElement('td');
+    cellEl.textContent = `${result.timesSelected}`;
+    rowEl.appendChild(cellEl);
+
     document.querySelector('aside').classList.remove('hidden');
     document.getElementById('view-results').classList.add('hidden');
   }
