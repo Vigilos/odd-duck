@@ -1,10 +1,14 @@
 'use strict';
 
 document.querySelector('aside').classList.add('hidden');
+document.getElementById('view-results').classList.add('hidden');
 
+let pickImagesEl = document.getElementById('pick-images');
 let products = [];
-let votingRounds = 1;
+let numVotes = 0;
+let votingRounds = 5;
 let numProductsDisplayed = 3;
+let clickedElement;
 let productImages = [
   'bag.jpg',
   'boots.jpg',
@@ -49,8 +53,7 @@ for (let product of productImages) {
   });
 }
 
-// Loop to the maximum of voting times allowed by votingRounds
-for (let i = 0; i < votingRounds; i++) {
+function selectProducts() {
   let uniqueProducts = [];
 
   // Loop until the numProductsDisplayed number of unique items are chosen for display
@@ -63,6 +66,8 @@ for (let i = 0; i < votingRounds; i++) {
       product.timesShown++;
     }
   }
+
+  //Display current chosen products to the DOM
   displayProducts(uniqueProducts);
 }
 
@@ -75,7 +80,7 @@ function getRandomProducts(productsArray) {
 
 // Displays product images and names to the DOM
 function displayProducts(arrayToDisplay) {
-  let pickImagesEl = document.getElementById('pick-images');
+  //   let pickImagesEl = document.getElementById('pick-images');
   let imageNumber = 0;
 
   for (let product of arrayToDisplay) {
@@ -92,28 +97,46 @@ function displayProducts(arrayToDisplay) {
     sectionEl.appendChild(pEl);
     imageNumber++; // Increment variable to create successive class names
   }
-
-  // Get selections from user and denote in product object
-  let clickedElement;
-  document
-    .querySelector('#pick-images')
-    .addEventListener('click', function (event) {
-      clickedElement = event.target.alt;
-      if (typeof clickedElement == 'string') {
-        // ***** Process clicked item
-        updateSelectedProducts(clickedElement);
-        console.log(products);
-      }
-    });
 }
 
+// Process clicked item
+function handleProductSelected(event) {
+  clickedElement = event.target.alt;
+  console.log(clickedElement);
+  if (typeof clickedElement == 'string') {
+    updateSelectedProducts(clickedElement);
+    console.log(products);
+  }
+
+  // Check if reached end pof voting rounds
+  if (numVotes === votingRounds) {
+    document
+      .querySelector('#pick-images')
+      .removeEventListener('click', handleProductSelected);
+
+    console.log('ALL DONE!');
+    document.getElementById('view-results').classList.remove('hidden');
+    // **** Continue processing end of voting
+  } else {
+    pickImagesEl.innerHTML = '';
+    selectProducts();
+  }
+}
+
+// Update timesSelected property for product objects that have been selected by user
 function updateSelectedProducts(selectedProduct) {
   for (let i = 0; i < products.length; i++) {
     if (selectedProduct === products[i].prodName) {
       products[i].timesSelected++;
+      numVotes++; //Increment the number of votes toward max votingRounds
       break;
     }
   }
 }
 
-console.log(products);
+selectProducts();
+
+// Get selections from user and denote in product object
+document
+  .querySelector('#pick-images')
+  .addEventListener('click', handleProductSelected);
