@@ -15,10 +15,17 @@ header p {
   font-family: Arial, Helvetica, sans-serif;
   color: #828282;
 }
+main {
+  display: flex;
+}
 main h2 {
   font-size: 20px;
   font-weight: bold;
   margin: 20px;
+}
+aside {
+  border: thin solid #757474;
+  padding-bottom: 40px;
 }
 #pick-images {
   margin-left: 20px;
@@ -40,4 +47,11 @@ main h2 {
 }
 #view-results {
   margin-left: 40px;
+}
+#results-panel li {
+  margin-left: 20px;
+  margin-right: 10px;
+  padding-bottom: 3px;
+  list-style: none;
+  font-size: 12px;
 }

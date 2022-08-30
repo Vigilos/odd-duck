@@ -6,7 +6,7 @@ document.getElementById('view-results').classList.add('hidden');
 let pickImagesEl = document.getElementById('pick-images');
 let products = [];
 let numVotes = 0;
-let votingRounds = 5;
+let votingRounds = 2;
 let numProductsDisplayed = 3;
 let clickedElement;
 let productImages = [
@@ -37,7 +37,7 @@ function Product(prodName, prodImgPath) {
   this.prodImgPath = prodImgPath;
   this.timesShown = 0;
   this.timesSelected = 0;
-  this.currentlyConsidered = false;
+  this.currentlyConsidered = productImages;
 }
 
 // Declare function to create an object from an array of data and append it from an array
@@ -105,7 +105,6 @@ function handleProductSelected(event) {
   console.log(clickedElement);
   if (typeof clickedElement == 'string') {
     updateSelectedProducts(clickedElement);
-    console.log(products);
   }
 
   // Check if reached end pof voting rounds
@@ -113,10 +112,10 @@ function handleProductSelected(event) {
     document
       .querySelector('#pick-images')
       .removeEventListener('click', handleProductSelected);
-
-    console.log('ALL DONE!');
     document.getElementById('view-results').classList.remove('hidden');
-    // **** Continue processing end of voting
+    document
+      .getElementById('view-results')
+      .addEventListener('click', displayResults);
   } else {
     pickImagesEl.innerHTML = '';
     selectProducts();
@@ -131,6 +130,17 @@ function updateSelectedProducts(selectedProduct) {
       numVotes++; //Increment the number of votes toward max votingRounds
       break;
     }
+  }
+}
+
+function displayResults() {
+  for (let result of products) {
+    let ulEl = document.getElementById('results-list');
+    let liEl = document.createElement('li');
+    liEl.textContent = `${result.prodName} Seen: ${result.timesShown}, Voted For: ${result.timesSelected}`;
+    ulEl.appendChild(liEl);
+    document.querySelector('aside').classList.remove('hidden');
+    document.getElementById('view-results').classList.add('hidden');
   }
 }
 
