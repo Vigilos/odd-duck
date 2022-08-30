@@ -25,6 +25,7 @@ body {
 }
 main {
   display: flex;
+  background-color: #f4c5a1;
 }
 main h2 {
   font-size: 20px;
@@ -37,7 +38,7 @@ main section {
 aside {
   border: thin solid #757474;
   padding-bottom: 40px;
-  background-color: #a6cddc;
+  background-color: #97b6dc;
   margin-bottom: 30px;
 }
 aside h2 {
@@ -63,6 +64,10 @@ aside h2 {
 }
 #view-results {
   margin-left: 40px;
+  background-color: #f16d07;
+  color: black;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 #results-list {
   margin-left: 20px;
@@ -84,6 +89,13 @@ aside h2 {
   padding: 5px;
   text-align: center;
   border: thin solid gray;
+}
+#votes-left {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+  padding: 8px;
 }
 footer {
   position: absolute;
