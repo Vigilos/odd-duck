@@ -25,7 +25,7 @@ body {
 }
 main {
   display: flex;
-  background-color: #f4c5a1;
+  background-color: #ffe7d5;
 }
 main h2 {
   font-size: 20px;
@@ -62,7 +62,7 @@ aside h2 {
 }
 #view-results {
   margin-left: 40px;
-  background-color: #f16d07;
+  background-color: #f9964b;
   color: black;
   letter-spacing: 2px;
   font-weight: bold;
