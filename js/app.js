@@ -8,7 +8,7 @@ let pickImagesEl = document.getElementById('pick-images');
 let products = [];
 let numVotes = 0;
 let votingRounds = 25;
-let votesLeft = votingRounds + 1;
+let votesLeft = votingRounds;
 let numProductsDisplayed = 3;
 let clickedElement;
 let lastProducts = [];
@@ -50,10 +50,16 @@ function addProduct(data) {
 
 // Populate the products array from an array containing the list of images from directory, using the file name (less extension) as the prodName
 for (let product of productImages) {
-  addProduct({
-    prodName: product.split('.')[0],
-    prodImgPath: `./img/${product}`,
-  });
+  // If Local Storage is empty, load previous stored data
+  let storedData = localStorage.getItem('products');
+  if (storedData) {
+    products = JSON.parse(storedData);
+  } else {
+    addProduct({
+      prodName: product.split('.')[0],
+      prodImgPath: `./img/${product}`,
+    });
+  }
 }
 
 // Select unique products to be displayed (and not displayed in last round either)
@@ -70,8 +76,9 @@ function selectProducts() {
       product.timesShown++;
     }
   }
-  displayVotesLeft(); // Decrement votes left and display
+
   lastProducts = uniqueProducts;
+
   //Display current chosen products to the DOM
   displayProducts(uniqueProducts);
 }
@@ -109,22 +116,24 @@ function handleProductSelected(event) {
   clickedElement = event.target.alt;
   if (typeof clickedElement == 'string') {
     updateSelectedProducts(clickedElement);
-  }
 
-  // Check if reached end pof voting rounds
-  if (numVotes === votingRounds) {
-    // document.getElementById('votes-left').classList.add('hidden');
-    document.getElementById('votes-left').innerHTML = '';
-    document
-      .querySelector('#pick-images')
-      .removeEventListener('click', handleProductSelected);
-    document.getElementById('view-results').classList.remove('hidden');
-    document
-      .getElementById('view-results')
-      .addEventListener('click', displayResults);
-  } else {
-    pickImagesEl.innerHTML = '';
-    selectProducts();
+    // Check if reached end of voting rounds
+    if (numVotes === votingRounds) {
+      document.getElementById('votes-left').innerHTML = '';
+      document
+        .querySelector('#pick-images')
+        .removeEventListener('click', handleProductSelected);
+      document.getElementById('view-results').classList.remove('hidden');
+      document
+        .getElementById('view-results')
+        .addEventListener('click', displayResults);
+    } else {
+      pickImagesEl.innerHTML = '';
+      selectProducts();
+    }
+
+    // Store products array in local Storage
+    localStorage.setItem('products', JSON.stringify(products));
   }
 }
 
@@ -137,6 +146,7 @@ function updateSelectedProducts(selectedProduct) {
       break;
     }
   }
+  displayVotesLeft(); // Decrement votes left and display
 }
 
 // Display table of voting results in <aside>
@@ -230,3 +240,16 @@ selectProducts();
 document
   .querySelector('#pick-images')
   .addEventListener('click', handleProductSelected);
+
+// Clear Local Storage and reset page
+document.getElementById('clear-cache').addEventListener('click', function () {
+  if (
+    confirm(
+      'Are you sure you want to clear the stored data and rest the web page?'
+    )
+  ) {
+    localStorage.clear();
+    alert('Results cache cleared!');
+    window.location.reload();
+  }
+});

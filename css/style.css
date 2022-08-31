@@ -120,3 +120,14 @@ footer p {
   margin: 0px 0px 20px 60px;
   width: 500px;
 }
+#clear-cache-div {
+  text-align: right;
+}
+#clear-cache {
+  margin-left: 40px;
+  background-color: #f9281a;
+  color: white;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
