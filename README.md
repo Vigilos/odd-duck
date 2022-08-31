@@ -6,3 +6,4 @@ This website is intended to allow employees an opportunity to vote for the next 
 | :-------: | :--------------------------------------------------------------------: |
 | 29-Aug-22 | Initial build of website structure with voting and showing raw results |
 | 30-Aug-22 |   Added chart to show voting results and beautified a little in CSS    |
+| 31-Aug-22 |    Added use of local storage to allow persistance of results data     |

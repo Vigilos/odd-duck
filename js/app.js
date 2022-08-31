@@ -50,10 +50,16 @@ function addProduct(data) {
 
 // Populate the products array from an array containing the list of images from directory, using the file name (less extension) as the prodName
 for (let product of productImages) {
-  addProduct({
-    prodName: product.split('.')[0],
-    prodImgPath: `./img/${product}`,
-  });
+  // If Local Storage is empty, load previous stored data
+  let storedData = localStorage.getItem('products');
+  if (storedData) {
+    products = JSON.parse(storedData);
+  } else {
+    addProduct({
+      prodName: product.split('.')[0],
+      prodImgPath: `./img/${product}`,
+    });
+  }
 }
 
 // Select unique products to be displayed (and not displayed in last round either)
@@ -72,6 +78,7 @@ function selectProducts() {
   }
 
   lastProducts = uniqueProducts;
+
   //Display current chosen products to the DOM
   displayProducts(uniqueProducts);
 }
@@ -124,6 +131,9 @@ function handleProductSelected(event) {
       pickImagesEl.innerHTML = '';
       selectProducts();
     }
+
+    // Store products array in local Storage
+    localStorage.setItem('products', JSON.stringify(products));
   }
 }
 
@@ -230,3 +240,16 @@ selectProducts();
 document
   .querySelector('#pick-images')
   .addEventListener('click', handleProductSelected);
+
+// Clear Local Storage and reset page
+document.getElementById('clear-cache').addEventListener('click', function () {
+  if (
+    confirm(
+      'Are you sure you want to clear the stored data and rest the web page?'
+    )
+  ) {
+    localStorage.clear();
+    alert('Results cache cleared!');
+    window.location.reload();
+  }
+});
