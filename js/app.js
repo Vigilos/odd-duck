@@ -8,7 +8,7 @@ let pickImagesEl = document.getElementById('pick-images');
 let products = [];
 let numVotes = 0;
 let votingRounds = 25;
-let votesLeft = votingRounds + 1;
+let votesLeft = votingRounds;
 let numProductsDisplayed = 3;
 let clickedElement;
 let lastProducts = [];
@@ -70,7 +70,7 @@ function selectProducts() {
       product.timesShown++;
     }
   }
-  displayVotesLeft(); // Decrement votes left and display
+
   lastProducts = uniqueProducts;
   //Display current chosen products to the DOM
   displayProducts(uniqueProducts);
@@ -109,22 +109,21 @@ function handleProductSelected(event) {
   clickedElement = event.target.alt;
   if (typeof clickedElement == 'string') {
     updateSelectedProducts(clickedElement);
-  }
 
-  // Check if reached end pof voting rounds
-  if (numVotes === votingRounds) {
-    // document.getElementById('votes-left').classList.add('hidden');
-    document.getElementById('votes-left').innerHTML = '';
-    document
-      .querySelector('#pick-images')
-      .removeEventListener('click', handleProductSelected);
-    document.getElementById('view-results').classList.remove('hidden');
-    document
-      .getElementById('view-results')
-      .addEventListener('click', displayResults);
-  } else {
-    pickImagesEl.innerHTML = '';
-    selectProducts();
+    // Check if reached end of voting rounds
+    if (numVotes === votingRounds) {
+      document.getElementById('votes-left').innerHTML = '';
+      document
+        .querySelector('#pick-images')
+        .removeEventListener('click', handleProductSelected);
+      document.getElementById('view-results').classList.remove('hidden');
+      document
+        .getElementById('view-results')
+        .addEventListener('click', displayResults);
+    } else {
+      pickImagesEl.innerHTML = '';
+      selectProducts();
+    }
   }
 }
 
@@ -137,6 +136,7 @@ function updateSelectedProducts(selectedProduct) {
       break;
     }
   }
+  displayVotesLeft(); // Decrement votes left and display
 }
 
 // Display table of voting results in <aside>
